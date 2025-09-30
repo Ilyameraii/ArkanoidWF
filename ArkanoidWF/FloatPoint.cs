@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ArkanoidWF
 {
-    internal struct Point
+    internal struct FloatPoint
     {
-        public int X;
-        public int Y;
-        public Point(int x,int y)
+        public float X;
+        public float Y;
+        public FloatPoint(float x,float y)
         {
             X = x;
             Y = y;
