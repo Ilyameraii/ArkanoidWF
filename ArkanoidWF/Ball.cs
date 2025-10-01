@@ -70,7 +70,7 @@ namespace ArkanoidWF
         }
         private void CollideHorizontal()
         {
-            Angle =  - Angle;
+            Angle = -Angle;
         }
         public void Move()
         {
@@ -78,108 +78,5 @@ namespace ArkanoidWF
             Y += Speed * (float)Math.Sin(Angle);
         }
 
-        public void BounceOffWalls(float maxWidth, float maxHeight)
-        {
-            if (Y <= 0 || Y + Size >= maxHeight)
-                CollideHorizontal();
-            if (X <= 0 || X + Size >= maxWidth)
-                CollideVertical();
-        }
-
-        public void BounceOffBrick(Rectangle brick)
-        {
-            if (!collidesWith(brick)) return;
-
-            HitSide side = GetHitSide(brick);
-
-            // Выталкиваем шар из кирпича
-            ResolvePenetration(brick, side);
-
-            switch (side)
-            {
-                case HitSide.Top:
-                case HitSide.Bottom:
-                    CollideHorizontal(); // отскок по Y
-                    break;
-                case HitSide.Left:
-                case HitSide.Right:
-                    CollideVertical();   // отскок по X
-                    break;
-            }
-        }
-        private void ResolvePenetration(Rectangle brick, HitSide side)
-        {
-            float r = Size / 2.0f;
-
-            switch (side)
-            {
-                case HitSide.Top:
-                    // Шар должен быть НАД кирпичом
-                    Y = brick.Y - Size;
-                    break;
-                case HitSide.Bottom:
-                    // Шар должен быть ПОД кирпичом
-                    Y = brick.Y + brick.Height;
-                    break;
-                case HitSide.Left:
-                    // Шар должен быть СЛЕВА от кирпича
-                    X = brick.X - Size;
-                    break;
-                case HitSide.Right:
-                    // Шар должен быть СПРАВА от кирпича
-                    X = brick.X + brick.Width;
-                    break;
-            }
-
-            // Обновляем центр (если используете поле, а не вычисляемое свойство)
-            // В вашем случае Center — свойство, так что не нужно
-        }
-        private bool collidesWith(Rectangle brick)
-        {
-            float r = Size / 2.0f;
-
-            // Ближайшая точка на прямоугольнике к центру окружности
-            float closestX = Math.Clamp(Center.X, brick.X, brick.X + brick.Width);
-            float closestY = Math.Clamp(Center.Y, brick.Y, brick.Y + brick.Height);
-
-            // Квадрат расстояния от центра до ближайшей точки
-            float dx = Center.X - closestX;
-            float dy = Center.Y - closestY;
-            float distanceSquared = dx * dx + dy * dy;
-
-            return distanceSquared <= r * r;
-        }
-        private enum HitSide
-        {
-            None,
-            Top,
-            Bottom,
-            Left,
-            Right
-        }
-
-        private HitSide GetHitSide(Rectangle brick)
-        {
-            float r = Size / 2.0f;
-            FloatPoint brickCenter = new FloatPoint(
-                brick.X + brick.Width / 2f,
-                brick.Y + brick.Height / 2f
-            );
-
-            float dx = Center.X - brickCenter.X;
-            float dy = Center.Y - brickCenter.Y;
-
-            // Сравниваем абсолютные смещения по осям
-            if (Math.Abs(dx) > Math.Abs(dy))
-            {
-                // Удар по вертикальной грани
-                return dx > 0 ? HitSide.Right : HitSide.Left;
-            }
-            else
-            {
-                // Удар по горизонтальной грани
-                return dy > 0 ? HitSide.Bottom : HitSide.Top;
-            }
-        }
     }
 }
