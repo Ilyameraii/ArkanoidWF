@@ -73,9 +73,9 @@ namespace ArkanoidWF.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap background {
+        internal static System.Drawing.Bitmap juggernaut_bg {
             get {
-                object obj = ResourceManager.GetObject("background", resourceCulture);
+                object obj = ResourceManager.GetObject("juggernaut_bg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
