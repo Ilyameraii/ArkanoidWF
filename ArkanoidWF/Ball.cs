@@ -70,7 +70,7 @@ namespace ArkanoidWF
         }
         private void CollideHorizontal()
         {
-            Angle = -Angle;
+            Angle =  - Angle;
         }
         public void Move()
         {
@@ -78,5 +78,12 @@ namespace ArkanoidWF
             Y += Speed * (float)Math.Sin(Angle);
         }
 
+        public void BounceOffWalls(float maxWidth, float maxHeight)
+        {
+            if (Y <= 0 || Y + Size >= maxHeight)
+                CollideHorizontal();
+            if (X <= 0 || X + Size >= maxWidth)
+                CollideVertical();
+        }
     }
 }
