@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArkanoidWF.Constants
 {
-    internal static class BrickParameters
+    internal static class PlayerPlatformParameters
     {
-        public const int Width = 50;
-        public const int Height = 20;
-        public const float Bold = 2f;
     }
 }

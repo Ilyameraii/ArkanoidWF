@@ -5,10 +5,10 @@ namespace ArkanoidWF
     internal class Brick
     {
 
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; } = BrickParameters.Width;
-        public int Height { get; } = BrickParameters.Height;
+        public float X { get; set; }
+        public float Y { get; set; }
+        public  int Width { get; } = BrickParameters.Width;
+        public  int Height { get; } = BrickParameters.Height;
         private int _hp;
         public int HP
         {
@@ -20,18 +20,12 @@ namespace ArkanoidWF
                 else _hp = value;
             }
         }
-        public Rectangle Bounds => new Rectangle(X, Y, Width, Height);
+        public Rectangle Bounds => new Rectangle((int)X, (int)Y, Width, Height);
         public Color Color
         {
             get
             {
-                return HP switch
-                {
-                    1 => BrickColors.ColorFor1HP,
-                    2 => BrickColors.ColorFor2HP,
-                    3 => BrickColors.ColorFor3HP,
-                    _ => Color.Black 
-                };
+                return setColor();
             }
         }
         public Brick(int x, int y, int hp)
@@ -39,6 +33,15 @@ namespace ArkanoidWF
             X = x;
             Y = y;
             HP = hp;
+        }
+        private Color setColor() {
+            return HP switch
+            {
+                1 => BrickColors.ColorFor1HP,
+                2 => BrickColors.ColorFor2HP,
+                3 => BrickColors.ColorFor3HP,
+                _ => Color.Black
+            };
         }
         public void TakeDamage(int damage = 1)
         {

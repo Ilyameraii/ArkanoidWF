@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ArkanoidWF.Constants
 {
-    internal static class BrickParameters
+    internal class BallParameters
     {
-        public const int Width = 50;
-        public const int Height = 20;
-        public const float Bold = 2f;
+        public static readonly Image Image = Properties.Resources.aegis;
+        public const int Size = 20;
     }
 }
