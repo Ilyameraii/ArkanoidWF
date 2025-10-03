@@ -75,8 +75,10 @@ namespace ArkanoidWF
         {
             foreach (var brick in gameCore.Bricks)
             {
-                e.Graphics.FillRectangle(new SolidBrush(brick.Color), brick.Bounds);
-                e.Graphics.DrawRectangle(new Pen(Color.Black, BrickParameters.Bold), brick.Bounds);
+                using var brush = new SolidBrush(brick.Color);
+                using var pen = new Pen(Color.Black, BrickParameters.Bold);
+                e.Graphics.FillRectangle(brush, brick.Bounds);
+                e.Graphics.DrawRectangle(pen, brick.Bounds);
             }
         }
         private void PlayerPlatformPaint(PaintEventArgs e)
@@ -99,7 +101,6 @@ namespace ArkanoidWF
                     break;
             }
         }
-
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)

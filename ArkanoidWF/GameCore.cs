@@ -42,15 +42,20 @@ namespace ArkanoidWF
             {
                 ball.Move();
                 ball.BounceOffWalls(maxWidth, maxHeight);
-                foreach (var brick in bricks.ToList())
+                var toRemove = new List<Brick>();
+                foreach (var brick in bricks)
                 {
                     ball.BounceOffBrick(brick);
-                    if (brick.HP < 1)
+                    if (brick.HP <= 0)
                     {
-                        bricks.Remove(brick);
-                        checkIsGameOver();
+                        toRemove.Add(brick);
                     }
                 }
+                foreach (var brick in toRemove)
+                {
+                    bricks.Remove(brick);
+                }
+                checkIsGameOver();
             }
         }
         private void playerAction()
