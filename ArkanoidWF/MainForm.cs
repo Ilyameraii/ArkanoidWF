@@ -18,7 +18,7 @@ namespace ArkanoidWF
             InitializeComponent();
             InitializeTimer();
 
-            gameCore = new GameCore(Width,Height);
+            gameCore = new GameCore(Width, Height);
 
             if (gameTimer != null)
             {
@@ -36,20 +36,21 @@ namespace ArkanoidWF
             {
                 Enabled = false,
                 /// частота тика равна герцовке
-                Interval = (int)(1000/ Herz),
+                Interval = (int)(1000 / Herz),
             };
             gameTimer.Tick += Timer_Tick;
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            if (!gameCore.isGameOver) { 
-            gameCore.Tick();
-            Invalidate();
+            if (!gameCore.isGameOver)
+            {
+                gameCore.Tick();
+                Invalidate();
             }
             else
             {
-                if(gameTimer != null)
+                if (gameTimer != null)
                 {
                     gameTimer.Stop();
                 }
@@ -57,20 +58,60 @@ namespace ArkanoidWF
         }
 
         protected override void OnPaint(PaintEventArgs e)
-        {       
+        {
             base.OnPaint(e);
-            Graphics g = e.Graphics;
-            g.DrawImage(gameCore.BallImage, gameCore.BallX, gameCore.BallY, gameCore.BallSize, gameCore.BallSize);
+
+            PlayerPlatformPaint(e);
+
+            ballPaint(e);
 
             brickPaint(e);
         }
+        private void ballPaint(PaintEventArgs e)
+        {
+            e.Graphics.DrawImage(BallParameters.Image, gameCore.BallX, gameCore.BallY, BallParameters.Size, BallParameters.Size);
+        }
         private void brickPaint(PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
             foreach (var brick in gameCore.Bricks)
             {
-                g.FillRectangle(new SolidBrush(brick.Color), brick.Bounds);
-                g.DrawRectangle(new Pen(Color.Black, BrickParameters.Bold), brick.Bounds);
+                e.Graphics.FillRectangle(new SolidBrush(brick.Color), brick.Bounds);
+                e.Graphics.DrawRectangle(new Pen(Color.Black, BrickParameters.Bold), brick.Bounds);
+            }
+        }
+        private void PlayerPlatformPaint(PaintEventArgs e)
+        {
+            e.Graphics.DrawImage(PlayerPlatformParameters.Image, gameCore.PlatformX, gameCore.PlatformY, PlayerPlatformParameters.Width, PlayerPlatformParameters.Height);
+
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                case Keys.Left:
+                    gameCore.SetMoveLeft(true);
+                    break;
+                case Keys.D:
+                case Keys.Right:
+                    gameCore.SetMoveRight(true);
+                    break;
+            }
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                case Keys.Left:
+                    gameCore.SetMoveLeft(false);
+                    break;
+                case Keys.D:
+                case Keys.Right:
+                    gameCore.SetMoveRight(false);
+                    break;
             }
         }
     }

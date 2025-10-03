@@ -28,7 +28,7 @@ namespace ArkanoidWF
                 return setColor();
             }
         }
-        public Brick(int x, int y, int hp)
+        public Brick(float x, float y, int hp)
         {
             X = x;
             Y = y;
