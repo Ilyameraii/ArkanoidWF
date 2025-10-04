@@ -36,8 +36,7 @@ namespace ArkanoidWF.Сlasses
 
             ball = new Ball(x: maxWidth/2, y: 300, speed: 10);
 
-            //fillBricksLevelOne();
-            fillBrickOne();
+            fillBricksLevelOne();
         }
         public void Tick()
         {
@@ -71,11 +70,6 @@ namespace ArkanoidWF.Сlasses
                 playerPlatform.MoveRight();
 
             // Здесь также обновляйте шар, кирпичи и т.д.
-        }
-        private void fillBrickOne()
-        {
-            var brick = new Brick(x: 0, y: 150, hp: 3);
-            bricks.Add(brick);
         }
         private void fillBricksLevelOne()
         {

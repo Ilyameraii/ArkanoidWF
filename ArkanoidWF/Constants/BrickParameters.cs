@@ -5,7 +5,7 @@
         /// <summary>
         /// Длина кирпича
         /// </summary>
-        public static readonly int Width = MonitorParameters.MaximizeWidth/16*4;
+        public static readonly int Width = MonitorParameters.MaximizeWidth/16;
 
         /// <summary>
         /// Ширина кирпича
