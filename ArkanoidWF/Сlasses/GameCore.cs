@@ -5,6 +5,7 @@ namespace ArkanoidWF.Сlasses
 {
     internal class GameCore
     {
+        // 0_0 лицо насрудина
         private readonly Ball ball;
 
         private readonly PlayerPlatform playerPlatform;
@@ -16,9 +17,13 @@ namespace ArkanoidWF.Сlasses
         private readonly float maxHeight;
 
         private bool moveLeft = false;
+
         private bool moveRight = false;
+
         public void SetMoveLeft(bool value) => moveLeft = value;
+
         public void SetMoveRight(bool value) => moveRight = value;
+
         // Внешний код может только читать, но не менять список
         public IReadOnlyList<Brick> Bricks => bricks.AsReadOnly();
         public bool isGameOver { get; private set; } = false;
@@ -32,7 +37,8 @@ namespace ArkanoidWF.Сlasses
 
             ball = new Ball(x: maxWidth/2, y: 300, speed: 10);
 
-            fillBricksLevelOne();
+            //fillBricksLevelOne();
+            fillBrickOne();
         }
         public void Tick()
         {
@@ -66,6 +72,11 @@ namespace ArkanoidWF.Сlasses
                 playerPlatform.MoveRight();
 
             // Здесь также обновляйте шар, кирпичи и т.д.
+        }
+        private void fillBrickOne()
+        {
+            var brick = new Brick(x: 0, y: 150, hp: 3);
+            bricks.Add(brick);
         }
         private void fillBricksLevelOne()
         {

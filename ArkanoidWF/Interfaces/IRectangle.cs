@@ -1,4 +1,4 @@
-﻿namespace ArkanoidWF.Сlasses
+﻿namespace ArkanoidWF.Interfaces
 {
     internal interface IRectangle
     {

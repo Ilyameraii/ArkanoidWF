@@ -1,5 +1,6 @@
 ﻿using ArkanoidWF.Constants;
 using ArkanoidWF.Enums;
+using ArkanoidWF.Interfaces;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace ArkanoidWF.Сlasses

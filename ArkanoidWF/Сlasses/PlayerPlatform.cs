@@ -1,4 +1,5 @@
 ﻿using ArkanoidWF.Constants;
+using ArkanoidWF.Interfaces;
 namespace ArkanoidWF.Сlasses
 {
     internal class PlayerPlatform : IRectangle

@@ -8,7 +8,7 @@ namespace ArkanoidWF.Constants
 {
     internal static class BrickParameters
     {
-        public const int Width = 50;
+        public const int Width = 500;
         public const int Height = 20;
         public const float Bold = 2f;
     }
