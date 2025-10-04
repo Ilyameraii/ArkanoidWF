@@ -1,16 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArkanoidWF.Constants
+﻿namespace ArkanoidWF.Constants
 {
     internal static class PlayerPlatformParameters
     {
-        public const int Width = 200;
-        public const int Height = 16;
+        /// <summary>
+        /// Картинка платформы
+        /// </summary>
         public static readonly Image Image = Properties.Resources.katana;
-        public const float Speed = 20;
+
+        /// <summary>
+        /// Длина платформы
+        /// </summary>
+        public static readonly int Width = MonitorParameters.MaximizeWidth/4;
+
+        /// <summary>
+        /// Ширина платформы
+        /// </summary>
+        public static readonly int Height = (int)(Width/12.5);
+
+        /// <summary>
+        /// Скорость платформы
+        /// </summary>
+        public static readonly float Speed = Width/10;
     }
 }

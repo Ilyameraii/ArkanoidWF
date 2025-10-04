@@ -73,6 +73,36 @@ namespace ArkanoidWF.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap closebutton {
+            get {
+                object obj = ResourceManager.GetObject("closebutton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap closebuttonclick {
+            get {
+                object obj = ResourceManager.GetObject("closebuttonclick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap closebuttonin {
+            get {
+                object obj = ResourceManager.GetObject("closebuttonin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap juggernaut_bg {
             get {
                 object obj = ResourceManager.GetObject("juggernaut_bg", resourceCulture);
@@ -93,9 +123,39 @@ namespace ArkanoidWF.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap lose {
+            get {
+                object obj = ResourceManager.GetObject("lose", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap playbutton {
             get {
                 object obj = ResourceManager.GetObject("playbutton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap restartButton {
+            get {
+                object obj = ResourceManager.GetObject("restartButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap victory {
+            get {
+                object obj = ResourceManager.GetObject("victory", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

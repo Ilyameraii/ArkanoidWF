@@ -7,19 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Освободить все используемые ресурсы.
-        /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Код, автоматически созданный конструктором компонентов
 
         /// <summary> 
@@ -28,28 +15,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            PlayButton = new Button();
+            playButton = new Button();
             SuspendLayout();
             // 
-            // PlayButton
+            // playButton
             // 
-            PlayButton.BackColor = Color.Transparent;
-            PlayButton.BackgroundImage = Properties.Resources.playbutton;
-            PlayButton.BackgroundImageLayout = ImageLayout.Stretch;
-            PlayButton.FlatStyle = FlatStyle.Popup;
-            PlayButton.Location = new Point(204, 216);
-            PlayButton.Margin = new Padding(0);
-            PlayButton.Name = "PlayButton";
-            PlayButton.Size = new Size(327, 50);
-            PlayButton.TabIndex = 0;
-            PlayButton.UseVisualStyleBackColor = false;
+            playButton.BackColor = Color.Transparent;
+            playButton.BackgroundImage = Properties.Resources.playbutton;
+            playButton.BackgroundImageLayout = ImageLayout.Stretch;
+            playButton.Cursor = Cursors.Hand;
+            playButton.FlatStyle = FlatStyle.Popup;
+            playButton.Location = new Point(204, 216);
+            playButton.Margin = new Padding(0);
+            playButton.Name = "playButton";
+            playButton.Size = new Size(327, 50);
+            playButton.TabIndex = 0;
+            playButton.UseVisualStyleBackColor = false;
             // 
             // StartUC
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Transparent;
-            Controls.Add(PlayButton);
+            Controls.Add(playButton);
+            DoubleBuffered = true;
             Name = "StartUC";
             Size = new Size(710, 503);
             Resize += StartUC_Resize;
@@ -58,6 +47,6 @@
 
         #endregion
 
-        private Button PlayButton;
+        private Button playButton;
     }
 }

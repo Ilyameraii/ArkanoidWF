@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArkanoidWF.Constants
+﻿namespace ArkanoidWF.Constants
 {
     internal static class BrickColors
     {
+        /// <summary>
+        /// Цвет кирпича при 1 ХП
+        /// </summary>
         public static readonly Color ColorFor1HP = Color.Red;
-        public static readonly Color ColorFor2HP = Color.Green;
+
+        /// <summary>
+        /// Цвет кирпича при 2 ХП
+        /// </summary>
+        public static readonly Color ColorFor2HP = Color.Yellow;
+
+        /// <summary>
+        /// Цвет кирпича при 3 ХП
+        /// </summary>
         public static readonly Color ColorFor3HP = Color.Blue;
     }
 }

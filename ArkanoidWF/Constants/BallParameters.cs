@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArkanoidWF.Constants
+﻿namespace ArkanoidWF.Constants
 {
     internal class BallParameters
     {
+        /// <summary>
+        ///  Картинка шара
+        /// </summary>
         public static readonly Image Image = Properties.Resources.aegis;
-        public const int Size = 20;
+
+        /// <summary>
+        /// Размер шара
+        /// </summary>
+        public static int Size = MonitorParameters.MaximizeWidth/40;
     }
 }

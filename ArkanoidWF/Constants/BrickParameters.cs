@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArkanoidWF.Constants
+﻿namespace ArkanoidWF.Constants
 {
     internal static class BrickParameters
     {
-        public const int Width = 500;
-        public const int Height = 20;
-        public const float Bold = 2f;
+        /// <summary>
+        /// Длина кирпича
+        /// </summary>
+        public static readonly int Width = MonitorParameters.MaximizeWidth/16*4;
+
+        /// <summary>
+        /// Ширина кирпича
+        /// </summary>
+        public static readonly int Height = (int)(Width/2.5);
+
+        /// <summary>
+        /// Толщина контура кирпича
+        /// </summary>
+        public static readonly float Bold = MonitorParameters.MaximizeWidth/400f;
     }
 }

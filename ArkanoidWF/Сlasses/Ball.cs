@@ -1,8 +1,6 @@
 ﻿using ArkanoidWF.Constants;
 using ArkanoidWF.Enums;
 using ArkanoidWF.Interfaces;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
-
 namespace ArkanoidWF.Сlasses
 {
     internal class Ball
@@ -83,10 +81,24 @@ namespace ArkanoidWF.Сlasses
 
         public void BounceOffWalls(float maxWidth, float maxHeight)
         {
-            if (Y <= 0 || Y + Size >= maxHeight)
+            // Проверка столкновения с верхней/нижней стенкой
+            if (Y <= 0)
+            {
+                Y = 0; // выталкиваем вниз до края
                 CollideHorizontal();
-            if (X <= 0 || X + Size >= maxWidth)
+            }
+
+            // Проверка столкновения с левой/правой стенкой
+            if (X <= 0)
+            {
+                X = 0; // выталкиваем вправо до края
                 CollideVertical();
+            }
+            else if (X + Size >= maxWidth)
+            {
+                X = maxWidth - Size; // выталкиваем влево до края
+                CollideVertical();
+            }
         }
         private void BounceOffRectangle(IRectangle rect, Action<HitSide> onHorizontalBounce)
         {

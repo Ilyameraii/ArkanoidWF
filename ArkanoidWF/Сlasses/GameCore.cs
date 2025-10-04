@@ -1,6 +1,4 @@
 ﻿using ArkanoidWF.Constants;
-using System.Runtime.InteropServices;
-
 namespace ArkanoidWF.Сlasses
 {
     internal class GameCore
@@ -27,6 +25,7 @@ namespace ArkanoidWF.Сlasses
         // Внешний код может только читать, но не менять список
         public IReadOnlyList<Brick> Bricks => bricks.AsReadOnly();
         public bool isGameOver { get; private set; } = false;
+        public bool isVictory { get; private set; } = false;
 
         public GameCore(float maxWidth, float maxHeight)
         {
@@ -80,7 +79,7 @@ namespace ArkanoidWF.Сlasses
         }
         private void fillBricksLevelOne()
         {
-            var lastBrickRightX = 0; // координата X правой стороны последнего кирпича в ряду
+            var lastBrickRightX = 0f; // координата X правой стороны последнего кирпича в ряду
             var brickWidth = BrickParameters.Width;
             while (lastBrickRightX + brickWidth < maxWidth)
             {
@@ -99,6 +98,11 @@ namespace ArkanoidWF.Сlasses
         private void checkIsGameOver()
         {
             if (bricks.Count == 0)
+            {
+                isVictory = true;
+                isGameOver = true;
+            }
+            if (ball.Y > maxHeight)
             {
                 isGameOver = true;
             }
