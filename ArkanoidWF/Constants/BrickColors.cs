@@ -15,6 +15,6 @@
         /// <summary>
         /// Цвет кирпича при 3 ХП
         /// </summary>
-        public static readonly Color ColorFor3HP = Color.Blue;
+        public static readonly Color ColorFor3HP = Color.Green;
     }
 }
