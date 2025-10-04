@@ -1,6 +1,8 @@
 ﻿using ArkanoidWF.Constants;
+using ArkanoidWF.Enums;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
-namespace ArkanoidWF
+namespace ArkanoidWF.Сlasses
 {
     internal class Ball
     {
@@ -35,8 +37,8 @@ namespace ArkanoidWF
                 // Опционально: нормализация
                 _angle = (float)(_angle % (2 * Math.PI));
                 if (_angle < 0) _angle += (float)(2 * Math.PI);
-            } 
-        } 
+            }
+        }
 
         /// <summary>
         /// Скорость шара
@@ -85,65 +87,87 @@ namespace ArkanoidWF
             if (X <= 0 || X + Size >= maxWidth)
                 CollideVertical();
         }
-        public void BounceOffBrick(Brick brick)
+        private void BounceOffRectangle(IRectangle rect, Action<HitSide> onHorizontalBounce)
         {
-            if (!IsBallCollidesWith(brick))
-            {
+            if (!IsBallCollidesWith(rect))
                 return;
+
+            HitSide side = GetHitSide(rect);
+
+            // Коррекция позиции (выталкивание)
+            switch (side)
+            {
+                case HitSide.Top:
+                    Y = rect.Y - Size;
+                    break;
+                case HitSide.Bottom:
+                    Y = rect.Y + rect.Height;
+                    break;
+                case HitSide.Left:
+                    X = rect.X - Size;
+                    break;
+                case HitSide.Right:
+                    X = rect.X + rect.Width;
+                    break;
             }
 
-            brick.TakeDamage(1);
-            HitSide side = GetHitSide(brick);
-
+            // Обработка отскока
             switch (side)
             {
                 case HitSide.Top:
                 case HitSide.Bottom:
-                    if (side == HitSide.Top)
-                    {
-                        Y = brick.Y - Size; // поднять шар над кирпичом
-                    }
-                    else if (side == HitSide.Bottom)
-                    {
-                        Y = brick.Y + brick.Height; // опустить под кирпич
-                    }
-                    CollideHorizontal(); // отскок по Y
+                    onHorizontalBounce?.Invoke(side);
                     break;
                 case HitSide.Left:
                 case HitSide.Right:
-                    if (side == HitSide.Left)
-                    {
-                        X = brick.X - Size; // поднять шар над кирпичом
-                    }
-                    else if (side == HitSide.Right)
-                    {
-                        X = brick.X + brick.Width; // опустить под кирпич
-                    }
-                    CollideVertical();   // отскок по X
+                    CollideVertical();
                     break;
             }
-
         }
-        private bool IsBallCollidesWith(Brick brick)
+        public void BounceOffBrick(Brick brick)
+        {
+            if (!IsBallCollidesWith(brick))
+                return;
+
+            brick.TakeDamage(1);
+
+            BounceOffRectangle(brick, side =>
+            {
+                CollideHorizontal(); // простой отскок
+            });
+        }
+
+        public void BounceOffPlatform(PlayerPlatform platform)
+        {
+            BounceOffRectangle(platform, side =>
+            {
+                // Угол зависит от позиции удара
+                var maxBounceAngle = MathF.PI / 3f;
+                var relativeX = (Center.X - platform.X) / platform.Width;
+                var normalized = Math.Clamp(2 * relativeX - 1, -1f, 1f);
+                Angle = -MathF.PI / 2 + normalized * maxBounceAngle;
+            });
+        }
+        private bool IsBallCollidesWith(IRectangle rectangle)
         {
 
             // Ближайшая точка на прямоугольнике к центру окружности
-            float closestX = Math.Clamp(Center.X, brick.X, brick.X + brick.Width);
-            float closestY = Math.Clamp(Center.Y, brick.Y, brick.Y + brick.Height);
+            float closestX = Math.Clamp(Center.X, rectangle.X, rectangle.X + rectangle.Width);
+            float closestY = Math.Clamp(Center.Y, rectangle.Y, rectangle.Y + rectangle.Height);
 
             // Квадрат расстояния от центра до ближайшей точки
             float dx = Center.X - closestX;
             float dy = Center.Y - closestY;
             float distanceSquared = dx * dx + dy * dy;
-            return (distanceSquared) <= radius * radius;
+            return distanceSquared <= radius * radius;
         }
-        private HitSide GetHitSide(Brick brick)
+        private HitSide GetHitSide(IRectangle rectangle)
         {
             // Границы кирпича
-            float left = brick.X;
-            float right = brick.X + brick.Width;
-            float top = brick.Y;
-            float bottom = brick.Y + brick.Height;
+            float left = rectangle.X;
+            float right = rectangle.X + rectangle.Width;
+            float top = rectangle.Y;
+            float bottom = rectangle.Y + rectangle.Height;
 
             // Расстояния от центра шара до граней
             float overlapLeft = Center.X - left;

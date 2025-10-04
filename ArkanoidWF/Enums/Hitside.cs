@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArkanoidWF
+namespace ArkanoidWF.Enums
 {
     internal enum HitSide
     {

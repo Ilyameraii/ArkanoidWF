@@ -1,4 +1,4 @@
-﻿namespace ArkanoidWF
+﻿namespace ArkanoidWF.Enums
 {
     internal struct FloatPoint
     {

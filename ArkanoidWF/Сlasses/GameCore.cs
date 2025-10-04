@@ -1,8 +1,7 @@
-﻿
-using ArkanoidWF.Constants;
+﻿using ArkanoidWF.Constants;
 using System.Runtime.InteropServices;
 
-namespace ArkanoidWF
+namespace ArkanoidWF.Сlasses
 {
     internal class GameCore
     {
@@ -42,6 +41,7 @@ namespace ArkanoidWF
             {
                 ball.Move();
                 ball.BounceOffWalls(maxWidth, maxHeight);
+                ball.BounceOffPlatform(playerPlatform);
                 var toRemove = new List<Brick>();
                 foreach (var brick in bricks)
                 {

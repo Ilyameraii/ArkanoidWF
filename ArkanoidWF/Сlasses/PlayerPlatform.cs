@@ -1,9 +1,7 @@
 ﻿using ArkanoidWF.Constants;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
-namespace ArkanoidWF
+namespace ArkanoidWF.Сlasses
 {
-    internal class PlayerPlatform
+    internal class PlayerPlatform : IRectangle
     {
         public Image Image { get; }
 

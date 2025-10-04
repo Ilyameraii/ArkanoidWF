@@ -1,8 +1,7 @@
-﻿
-using ArkanoidWF.Constants;
-namespace ArkanoidWF
+﻿using ArkanoidWF.Constants;
+namespace ArkanoidWF.Сlasses
 {
-    internal class Brick
+    internal class Brick: IRectangle
     {
 
         public float X { get; set; }
