@@ -40,14 +40,18 @@ namespace ArkanoidWF
             loseUC.ButtonClicked += OnRestartButtonClicked;
             loseUC.Dock = DockStyle.Fill;
         }
+
         // Обработчик события для ResultUC
         private void OnRestartButtonClicked(object? sender, EventArgs e)
         {
             ClearUC();
-            PrintStartUC(); // вызываем обычный метод
+            PrintStartUC();
         }
-        // В Designer добавьте panelGameArea (Dock = Fill)
+
+        // Открытие экрана начала игры
         private void PrintStartUC() => Controls.Add(startUC);
+
+        // Открытие экрана результата
         private void PrintResultUC()
         {
             if (gameCore?.isVictory == true)
@@ -55,6 +59,8 @@ namespace ArkanoidWF
             else
                 Controls.Add(loseUC);
         }
+
+        // Закрытие экранов UserControl
         private void ClearUC()
         {
             var userControls = Controls.OfType<UserControl>().ToList();
