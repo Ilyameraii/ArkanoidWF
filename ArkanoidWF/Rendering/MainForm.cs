@@ -1,7 +1,6 @@
 ﻿using ArkanoidWF.Constants;
 using ArkanoidWF.Rendering;
 using ArkanoidWF.Сlasses;
-using System.Diagnostics;
 
 namespace ArkanoidWF
 {
