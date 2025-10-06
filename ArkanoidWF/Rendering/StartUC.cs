@@ -2,7 +2,9 @@
 {
     public partial class StartUC : UserControl
     {
-
+        /// <summary>
+        /// Возникает, когда пользователь нажимает кнопку начала игры.
+        /// </summary>
         public event EventHandler? ButtonClicked;
         public StartUC()
         {
@@ -16,6 +18,7 @@
             ButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
+        // центрируем кнопку
         private void CenteringButton()
         {
             playButton.Location = new Point(

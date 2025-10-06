@@ -30,11 +30,11 @@
             ExitPB.Size = new Size(80, 61);
             ExitPB.TabIndex = 0;
             ExitPB.TabStop = false;
-            ExitPB.Click += pictureBox1_Click;
-            ExitPB.MouseDown += pictureBox1_MouseDown;
-            ExitPB.MouseEnter += pictureBox1_MouseEnter;
+            ExitPB.Click += ExitPB_Click;
+            ExitPB.MouseDown += ExitPB_MouseDown;
+            ExitPB.MouseEnter += ExitPB_MouseEnter;
             ExitPB.MouseLeave += ExitPB_MouseLeave;
-            ExitPB.MouseUp += pictureBox1_MouseUp;
+            ExitPB.MouseUp += ExitPB_MouseUp;
             // 
             // MainForm
             // 

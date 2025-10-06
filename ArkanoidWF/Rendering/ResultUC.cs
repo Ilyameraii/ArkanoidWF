@@ -3,7 +3,14 @@ namespace ArkanoidWF.Rendering
 {
     public partial class ResultUC : UserControl
     {
+        //// <summary>
+        /// Возникает, когда пользователь нажимает кнопку перезапуска игры.
+        /// </summary>
         public event EventHandler? ButtonClicked;
+        /// <summary>
+        /// конструктор
+        /// </summary>
+        /// <param name="isVictory">параметр, отвечающий за результат игры</param>
         public ResultUC(bool isVictory)
         {
             InitializeComponent();
@@ -24,7 +31,7 @@ namespace ArkanoidWF.Rendering
         {
             ButtonClicked?.Invoke(this, EventArgs.Empty);
         }
-
+        //центрирование картинки с кнопкой
         private void CenteringTable()
         {
             tableLayoutPanel.Location = new Point(

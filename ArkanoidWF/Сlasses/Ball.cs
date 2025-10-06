@@ -57,28 +57,47 @@ namespace ArkanoidWF.Сlasses
         // Координаты центра шара
         private FloatPoint Center => new FloatPoint(X + radius, Y + radius);
 
+        /// <summary>
+        /// конструктор
+        /// </summary>
+        /// <param name="x">Начальная позиция шара по X</param>
+        /// <param name="y">Начальная позиция шара по Y</param>
+        /// <param name="speed">скорость шара</param>
         public Ball(float x, float y, float speed)
         {
             X = x;
             Y = y;
             Speed = speed;
-            radius = Size / 2f;
-            Angle = (float)Math.PI / 2f;
+            radius = Size / 2f; // находим сразу радиус для упрощения и сокращения написания методов
+            Angle = (float)Math.PI / 2f; // сначала шар будет двигаться строго горизонтально вниз
         }
+
+        // логика отскока от вертикальной поверхности
         private void CollideVertical()
         {
             Angle = (float)Math.PI - Angle;
         }
+
+        // логика отскока от горизонтальной поверхности
         private void CollideHorizontal()
         {
             Angle = -Angle;
         }
+
+        /// <summary>
+        /// Движение шара
+        /// </summary>
         public void Move()
         {
             X += Speed * (float)Math.Cos(Angle);
             Y += Speed * (float)Math.Sin(Angle);
         }
 
+        /// <summary>
+        /// Проверка на столкновение и логика столкновения шара со стенами
+        /// </summary>
+        /// <param name="maxWidth">длина формы</param>
+        /// <param name="maxHeight">ширина формы</param>
         public void BounceOffWalls(float maxWidth, float maxHeight)
         {
             // Проверка столкновения с верхней/нижней стенкой
@@ -100,6 +119,8 @@ namespace ArkanoidWF.Сlasses
                 CollideVertical();
             }
         }
+
+        // проверка на столкновение и логика столкновения с прямоугольными объектами
         private void BounceOffRectangle(IRectangle rect, Action<HitSide> onHorizontalBounce)
         {
             if (!IsBallCollidesWith(rect))
@@ -129,7 +150,7 @@ namespace ArkanoidWF.Сlasses
             {
                 case HitSide.Top:
                 case HitSide.Bottom:
-                    onHorizontalBounce?.Invoke(side);
+                    onHorizontalBounce?.Invoke(side); // разделяем логику горизонтального столкновения у прямоугольных объектов
                     break;
                 case HitSide.Left:
                 case HitSide.Right:
@@ -137,23 +158,35 @@ namespace ArkanoidWF.Сlasses
                     break;
             }
         }
+
+        /// <summary>
+        /// логика столкновения с кирпичом
+        /// </summary>
+        /// <param name="brick"></param>
         public void BounceOffBrick(Brick brick)
         {
             if (!IsBallCollidesWith(brick))
                 return;
-
-            brick.TakeDamage(1);
-
             BounceOffRectangle(brick, side =>
             {
                 CollideHorizontal(); // простой отскок
             });
+            brick.TakeDamage(1);
+
+           
         }
 
+        /// <summary>
+        /// логика столкновения с платформой
+        /// </summary>
+        /// <param name="platform"></param>
         public void BounceOffPlatform(PlayerPlatform platform)
         {
             BounceOffRectangle(platform, side =>
             {
+                // Игнорируем удар снизу (шар не должен туда попадать)
+                if (side == HitSide.Bottom)
+                    return;
                 // Угол зависит от позиции удара
                 var maxBounceAngle = MathF.PI / 3f;
                 var relativeX = (Center.X - platform.X) / platform.Width;
@@ -161,6 +194,8 @@ namespace ArkanoidWF.Сlasses
                 Angle = -MathF.PI / 2 + normalized * maxBounceAngle;
             });
         }
+
+        // проверка на столкновение
         private bool IsBallCollidesWith(IRectangle rectangle)
         {
 
@@ -174,6 +209,8 @@ namespace ArkanoidWF.Сlasses
             float distanceSquared = dx * dx + dy * dy;
             return distanceSquared <= radius * radius;
         }
+
+        // вычисление стороны прямоугольника, с которой сталкиваемся
         private HitSide GetHitSide(IRectangle rectangle)
         {
             // Границы кирпича

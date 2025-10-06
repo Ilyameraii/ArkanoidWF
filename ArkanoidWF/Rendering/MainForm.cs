@@ -1,6 +1,7 @@
 ﻿using ArkanoidWF.Constants;
 using ArkanoidWF.Rendering;
 using ArkanoidWF.Сlasses;
+using System.Diagnostics;
 
 namespace ArkanoidWF
 {
@@ -8,72 +9,71 @@ namespace ArkanoidWF
     {
         private System.Windows.Forms.Timer? gameTimer;
 
+        private readonly ResultUC winUC = new ResultUC(isVictory: true);
+        private readonly ResultUC loseUC = new ResultUC(isVictory: false);
+        private readonly StartUC startUC = new StartUC();
+
         private GameCore? gameCore;
 
         public MainForm()
         {
             InitializeComponent();
+            KeyPreview = true; // перехвать нажатий клавиш
             InitializeTimer();
+            InitializeUC();
+
         }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             DoubleBuffered = true;
             PrintStartUC();
         }
-        private void InitializeGameCore()
+
+        private void InitializeUC()
         {
-            gameCore = new GameCore(ClientSize.Width, ClientSize.Height);
-        }
-        private void ClearControls()
-        {
-            foreach (Control control in Controls)
-            {
-                if (!(control is PictureBox))
-                    control.Dispose();
-            }
-        }
-        private void PrintStartUC()
-        {
-            ClearControls();
-            var startUC = new StartUC();
             startUC.ButtonClicked += StartGame;
-            Controls.Add(startUC);
             startUC.Dock = DockStyle.Fill;
+
+            winUC.ButtonClicked += OnRestartButtonClicked;
+            winUC.Dock = DockStyle.Fill;
+
+            loseUC.ButtonClicked += OnRestartButtonClicked;
+            loseUC.Dock = DockStyle.Fill;
         }
         // Обработчик события для ResultUC
         private void OnRestartButtonClicked(object? sender, EventArgs e)
         {
+            ClearUC();
             PrintStartUC(); // вызываем обычный метод
         }
-
+        // В Designer добавьте panelGameArea (Dock = Fill)
+        private void PrintStartUC() => Controls.Add(startUC);
         private void PrintResultUC()
         {
-            ClearControls();
-            if (gameCore != null)
+            if (gameCore?.isVictory == true)
+                Controls.Add(winUC);
+            else
+                Controls.Add(loseUC);
+        }
+        private void ClearUC()
+        {
+            var userControls = Controls.OfType<UserControl>().ToList();
+            foreach (var uc in userControls)
             {
-                var resultUC = new ResultUC(gameCore.isVictory);
-                resultUC.ButtonClicked += OnRestartButtonClicked;
-                Controls.Add(resultUC);
-                resultUC.Dock = DockStyle.Fill;
+                Controls.Remove(uc);
             }
         }
+        // начинает игру
         private void StartGame(object? sender, EventArgs e)
         {
-            // Отписываемся и удаляем текущий StartUC
-            if (sender is StartUC startUC)
-            {
-                startUC.ButtonClicked -= StartGame;
-                startUC.Dispose();
-            }
-
-            InitializeTimer();
-            InitializeGameCore();
+            ClearUC();
+            gameCore = new GameCore(ClientSize.Width, ClientSize.Height);
             gameTimer?.Start();
+            Focus();// Возвращаем фокус форме!
+            ActiveControl = null; // чтобы ни один дочерний контрол не имел фокуса
         }
-        private void GameRestart()
-        {
-            PrintResultUC();
-        }
+        // создает таймер
         private void InitializeTimer()
         {
             gameTimer = new System.Windows.Forms.Timer
@@ -84,7 +84,7 @@ namespace ArkanoidWF
             };
             gameTimer.Tick += Timer_Tick;
         }
-
+        // каждый тик таймера вызываем тик игрового процесса, затем её перерисовку
         private void Timer_Tick(object? sender, EventArgs e)
         {
             if (gameCore != null)
@@ -99,7 +99,7 @@ namespace ArkanoidWF
                     if (gameTimer != null)
                     {
                         gameTimer.Stop();
-                        GameRestart();
+                        PrintResultUC();
                     }
                 }
             }
@@ -120,6 +120,7 @@ namespace ArkanoidWF
                 }
             }
         }
+        // отрисовка  шара(мяча)(аегиса)
         private void ballPaint(PaintEventArgs e)
         {
             if (gameCore != null)
@@ -127,6 +128,7 @@ namespace ArkanoidWF
                 e.Graphics.DrawImage(BallParameters.Image, gameCore.BallX, gameCore.BallY, BallParameters.Size, BallParameters.Size);
             }
         }
+        // отрисовка каждого из кирпичика
         private void brickPaint(PaintEventArgs e)
         {
             if (gameCore != null)
@@ -140,6 +142,7 @@ namespace ArkanoidWF
                 }
             }
         }
+        // отрисовка игровой платформы
         private void PlayerPlatformPaint(PaintEventArgs e)
         {
             if (gameCore != null)
@@ -147,7 +150,7 @@ namespace ArkanoidWF
                 e.Graphics.DrawImage(PlayerPlatformParameters.Image, gameCore.PlatformX, gameCore.PlatformY, PlayerPlatformParameters.Width, PlayerPlatformParameters.Height);
             }
         }
-
+        // управление игрока
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (gameCore != null)
@@ -182,8 +185,8 @@ namespace ArkanoidWF
                 }
             }
         }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
+        // проверка на миссклик и закрытие формы
+        private void ExitPB_Click(object sender, EventArgs e)
         {
             var dialog = MessageBox.Show("Вы уверены что хотите выйти?", "Выход", MessageBoxButtons.OKCancel);
             if (dialog == DialogResult.OK)
@@ -191,30 +194,28 @@ namespace ArkanoidWF
                 Close();
             }
         }
-
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        // красивая анимка 'кнопки' выхода
+        private void ExitPB_MouseDown(object sender, MouseEventArgs e)
         {
             ExitPB.Image = FormImages.ClickImage;
         }
 
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        private void ExitPB_MouseUp(object sender, MouseEventArgs e)
         {
             ExitPB.Image = FormImages.DefaultImage;
         }
 
-        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        private void ExitPB_MouseEnter(object sender, EventArgs e)
         {
             ExitPB.Image = FormImages.EnterImage;
         }
-
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            ExitPB.Location = new Point(ClientSize.Width - ExitPB.Width, 0);
-        }
-
         private void ExitPB_MouseLeave(object sender, EventArgs e)
         {
             ExitPB.Image = FormImages.DefaultImage;
+        }
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            ExitPB.Location = new Point(ClientSize.Width - ExitPB.Width, 0);
         }
     }
 }
