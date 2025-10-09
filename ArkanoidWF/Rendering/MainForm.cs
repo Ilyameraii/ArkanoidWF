@@ -94,7 +94,7 @@ namespace ArkanoidWF
         {
             if (gameCore != null)
             {
-                if (!gameCore.isGameOver)
+                if (!gameCore.IsGameOver)
                 {
                     gameCore.Tick();
                     Invalidate();
@@ -164,11 +164,11 @@ namespace ArkanoidWF
                 {
                     case Keys.A:
                     case Keys.Left:
-                        gameCore.SetMoveLeft(true);
+                        gameCore.MoveLeft = true;
                         break;
                     case Keys.D:
                     case Keys.Right:
-                        gameCore.SetMoveRight(true);
+                        gameCore.MoveRight = true;
                         break;
                 }
             }
@@ -181,11 +181,11 @@ namespace ArkanoidWF
                 {
                     case Keys.A:
                     case Keys.Left:
-                        gameCore.SetMoveLeft(false);
+                        gameCore.MoveLeft = false;
                         break;
                     case Keys.D:
                     case Keys.Right:
-                        gameCore.SetMoveRight(false);
+                        gameCore.MoveRight = false;
                         break;
                 }
             }

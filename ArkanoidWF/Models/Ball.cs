@@ -1,6 +1,7 @@
 ﻿using ArkanoidWF.Constants;
 using ArkanoidWF.Enums;
 using ArkanoidWF.Interfaces;
+using ArkanoidWF.Structs;
 namespace ArkanoidWF.Сlasses
 {
     internal class Ball
