@@ -3,10 +3,11 @@ namespace ArkanoidWF.Rendering
 {
     public partial class ResultUC : UserControl
     {
-        //// <summary>
+        /// <summary>
         /// Возникает, когда пользователь нажимает кнопку перезапуска игры.
         /// </summary>
         public event EventHandler? ButtonClicked;
+
         /// <summary>
         /// конструктор
         /// </summary>
