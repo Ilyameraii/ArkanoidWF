@@ -55,9 +55,13 @@ namespace ArkanoidWF
         private void PrintResultUC()
         {
             if (gameCore?.IsVictory == true)
+            {     
                 Controls.Add(winUC);
+            }
             else
+            {
                 Controls.Add(loseUC);
+            }
         }
 
         // Закрытие экранов UserControl
