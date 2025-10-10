@@ -41,7 +41,7 @@ internal class GameCore
     /// <summary>
     /// Победил ли игрок
     /// </summary>
-    public bool isVictory { get; private set; } = false;
+    public bool IsVictory { get; private set; } = false;
 
     /// <summary>
     /// Конструктор
@@ -127,7 +127,7 @@ internal class GameCore
     {
         if (bricks.Count == 0)
         {
-            isVictory = true;
+            IsVictory = true;
             IsGameOver = true;
         }
         if (ball.Y > maxHeight)

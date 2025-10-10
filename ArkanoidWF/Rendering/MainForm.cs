@@ -54,7 +54,7 @@ namespace ArkanoidWF
         // Открытие экрана результата
         private void PrintResultUC()
         {
-            if (gameCore?.isVictory == true)
+            if (gameCore?.IsVictory == true)
                 Controls.Add(winUC);
             else
                 Controls.Add(loseUC);
@@ -119,9 +119,9 @@ namespace ArkanoidWF
 
                     PlayerPlatformPaint(e);
 
-                    ballPaint(e);
+                    BallPaint(e);
 
-                    brickPaint(e);
+                    BrickPaint(e);
                 }
             }
         }
