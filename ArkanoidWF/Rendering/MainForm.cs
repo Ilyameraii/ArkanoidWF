@@ -126,7 +126,7 @@ namespace ArkanoidWF
             }
         }
         // отрисовка  шара(мяча)(аегиса)
-        private void ballPaint(PaintEventArgs e)
+        private void BallPaint(PaintEventArgs e)
         {
             if (gameCore != null)
             {
@@ -134,7 +134,7 @@ namespace ArkanoidWF
             }
         }
         // отрисовка каждого из кирпичика
-        private void brickPaint(PaintEventArgs e)
+        private void BrickPaint(PaintEventArgs e)
         {
             if (gameCore != null)
             {

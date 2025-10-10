@@ -92,9 +92,13 @@ internal class GameCore
     private void PlayerAction()
     {
         if (MoveLeft && playerPlatform.X > 0)
+        { 
             playerPlatform.MoveLeft();
+        }
         if (MoveRight && playerPlatform.X + playerPlatform.Width < maxWidth)
+        { 
             playerPlatform.MoveRight();
+        }
 
     }
 
