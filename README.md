@@ -9,12 +9,6 @@ A classic **Arkanoid / Breakout** game built with **C# .NET 8 and Windows Forms*
 
 ---
 
-## 📸 Screenshots
-
-> _Add gameplay screenshots here — Start screen, game in progress, victory/defeat screens._
-
----
-
 ## ✨ Features
 
 - **Smooth 120 Hz game loop** — timer interval is synced to monitor refresh rate via `MonitorParameters`
